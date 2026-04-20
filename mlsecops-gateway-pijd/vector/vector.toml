@@ -1,0 +1,17 @@
+[sources.envoy_logs]
+type = "http_server"
+address = "0.0.0.0:9000"
+encoding = "json"
+
+[sinks.console_output]
+type = "console"
+inputs = ["envoy_logs"]
+encoding.codec = "json"
+
+# In a real setup, we would sink to Postgres
+# [sinks.postgres_storage]
+# type = "postgresql"
+# inputs = ["envoy_logs"]
+# endpoint = "postgres://user:password@postgres:5432/mlsecops"
+# table = "audit_logs"
+# schema = "public"

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Aegis AI Gateway</title>
+    <style>
+        body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: #58a6ff; margin-top: 0; }
+        textarea { width: 100%; height: 100px; background: #0d1117; color: #fff; border: 1px solid #30363d; border-radius: 6px; padding: 10px; box-sizing: border-box; }
+        button { width: 100%; margin-top: 15px; background: #238636; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #2ea043; }
+        #res { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; font-family: monospace; }
+        .pass { background: rgba(63, 185, 80, 0.1); border: 1px solid #3fb950; color: #3fb950; }
+        .block { background: rgba(248, 81, 73, 0.1); border: 1px solid #f85149; color: #f85149; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>Aegis AI Gateway</h2>
+    <textarea id="p" placeholder="Введите промпт здесь..."></textarea>
+    <button onclick="check()">Проверить безопасность</button>
+    <div id="res"></div>
+</div>
+<script>
+    async function check() {
+        const p = document.getElementById('p').value;
+        const res = document.getElementById('res');
+        res.style.display = 'block'; res.innerText = 'Анализ...';
+        try {
+            const r = await fetch('/v1/chat/completions', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({prompt: p})
+            });
+            const data = await r.json();
+            res.className = r.status === 200 ? 'pass' : 'block';
+            res.innerText = r.status === 200 ? '✅ Доступ разрешен (Forwarded to LLM)' : `🚫 Заблокировано: ${JSON.stringify(data.detail)}`;
+        } catch (e) { res.innerText = 'Ошибка связи с Envoy'; }
+    }
+</script>
+</body>
+</html>

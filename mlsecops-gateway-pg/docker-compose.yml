@@ -1,0 +1,67 @@
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.29-latest
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+      - ./envoy/filter.wasm:/etc/envoy/filter.wasm
+    ports:
+      - "10000:10000"
+    depends_on:
+      - ai-guard
+      - vector
+    networks:
+      - gateway_net
+
+  ai-guard:
+    build:
+      context: ./ai-guard
+      args:
+        - HF_TOKEN=${HF_TOKEN}
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HF_HOME=/app/model_cache
+      - HF_HUB_OFFLINE=1 # Жесткий запрет на сеть для HF
+    ports:
+      - "8080:8080" 
+    networks:
+      - gateway_net
+
+  vector:
+    image: timberio/vector:0.36.0-debian
+    volumes:
+      - ./vector/vector.toml:/etc/vector/vector.toml
+    ports:
+      - "9000:9000"
+    networks:
+      - gateway_net
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    networks:
+      - gateway_net
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: mlsecops
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks:
+      - gateway_net
+
+  ml-worker:
+    build: ./ml-worker
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/mlsecops
+    networks:
+      - gateway_net
+
+networks:
+  gateway_net:
+    driver: bridge

@@ -1,0 +1,8 @@
+services:
+  ai-guard:
+    # 1. Пробрасываем всю директорию с кодом пакета для Hot-Reload.
+    # Uvicorn будет следить за изменениями во всех файлах внутри папки app/
+    volumes:
+      - ./ai-guard/app:/app/app:ro
+    # 2. Переопределяем CMD из Dockerfile, добавляя --reload и правильный путь к модулю
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]

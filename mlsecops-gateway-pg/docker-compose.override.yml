@@ -1,0 +1,7 @@
+services:
+  ai-guard:
+    # 1. Пробрасываем файл с хоста внутрь контейнера
+    volumes:
+      - ./ai-guard/app.py:/app/app.py:ro
+    # 2. Переопределяем CMD из Dockerfile, добавляя --reload
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
