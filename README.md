@@ -7,6 +7,9 @@
 [![Proxy](https://img.shields.io/badge/Engine-Envoy%20%7C%20WASM-blue.svg)](#)
 [![Infrastructure](https://img.shields.io/badge/Deploy-Docker%20%7C%20Compose-2496ED.svg)](#)
 
+[⚠️WORK IN PROGRESS: This is an active PoC. Current focus: L2 DeBERTa integration.]
+
+
 ## 🎯 The "Day 2 Operations" Challenge
 In enterprise environments, deploying LLM guardrails is only the first step. The real challenge is **Day 2 Operations**: maintaining the efficacy of these guardrails against rapidly evolving prompt injection techniques and jailbreaks without disrupting legitimate business traffic.
 
