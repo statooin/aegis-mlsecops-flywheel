@@ -1,0 +1,26 @@
+# Secret files (passwords, API keys, tokens)
+.env
+*.env
+**/.env
+
+# Backups and heavy archives (not stored in git)
+backups/
+*.gz
+*.tar
+*.zip
+
+# Python (temporary files)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Docker
+.docker/
+
+# System files
+.DS_Store
+Thumbs.db
+
