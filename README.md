@@ -23,7 +23,7 @@ Aegis is built with a decoupled, cloud-native architecture optimized for sub-mil
 
 * **Aegis Gateway (Data Plane):** An **Envoy Proxy** layer utilizing **C++ WASM filters** for real-time payload inspection and heuristic blocking.
 * **ML-Inference Worker:** A PyTorch/LiteLLM backend executing deep semantic classification of prompts.
-* **Evaluation Framework (Control Plane):** A custom orchestration engine built on **PyRIT 0.12 architecture**, automating the security testing lifecycle.
+* **Evaluation Framework (Control Plane):** A custom orchestration engine built on **PyRIT 0.12.1 architecture**, automating the security testing lifecycle.
 * **Telemetry Hub:** In-memory state management (DuckDB) capturing granular metrics on which specific security echelon triggered a block.
 
 ---
