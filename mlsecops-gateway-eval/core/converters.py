@@ -1,3 +1,3 @@
-# Здесь в будущем будут лежать классы-конвертеры для Режима 2 (Obfuscation)
-# Например: Base64Converter, Rot13Converter, LeetspeakConverter
+# Converter classes for Mode 2 (Obfuscation) will be added here in the future
+# For example: Base64Converter, Rot13Converter, LeetspeakConverter
 pass
